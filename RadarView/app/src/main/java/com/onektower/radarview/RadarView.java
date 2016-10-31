@@ -9,6 +9,8 @@ import android.view.View;
  * 自定义雷达控件
  * 涉及类容：
  * 1、正多边形的相关计算（http://ipsm.hner.cn/czpd/kczy/shang/sx/3/12/rj-kebiao/1/jasl2.htm）
+ * 1.1、边数为奇数
+ * 1.2、边数为偶数
  */
 public class RadarView extends View{
     public RadarView(Context context) {
