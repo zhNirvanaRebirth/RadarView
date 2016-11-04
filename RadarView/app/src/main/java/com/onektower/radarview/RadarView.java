@@ -17,6 +17,8 @@ import android.view.View;
 public class RadarView extends View {
     //多边形默认边数
     private static final int defaultEdgeNum = 6;
+    //默认层数
+    private static final int defaultLayerNum = 6;
     //多边形默认半径
     private final float defaultRadius;
     //多边形默认边距
@@ -31,6 +33,8 @@ public class RadarView extends View {
     private float edgeDis;
     //多边形线宽
     private float lineWidth;
+    //层数
+    private int layerNum;
 
     public RadarView(Context context) {
         this(context, null);
@@ -61,7 +65,34 @@ public class RadarView extends View {
      */
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        setMeasuredDimension(measure(widthMeasureSpec, true), measure(heightMeasureSpec, false));
+    }
+
+    @Override
+    protected int getSuggestedMinimumWidth() {
+        return (int) (defaultEdgeDis*(defaultEdgeNum - 1) + defaultLineWidth*defaultEdgeNum + defaultRadius);
+    }
+
+    @Override
+    protected int getSuggestedMinimumHeight() {
+        return (int) (defaultEdgeDis*(defaultEdgeNum - 1) + defaultLineWidth*defaultEdgeNum + defaultRadius);
+    }
+
+    private int measure(int measureSpec, boolean isWidth){
+        int result;
+        int size = MeasureSpec.getSize(measureSpec);
+        int mode = MeasureSpec.getMode(measureSpec);
+        int padding = isWidth ? getPaddingLeft() + getPaddingRight() : getPaddingTop() + getPaddingBottom();
+        if (mode == MeasureSpec.EXACTLY){//表示用户设定了大小
+            result = size;
+        } else {
+            result = isWidth ? getSuggestedMinimumWidth() : getSuggestedMinimumHeight();
+            result += padding;
+            if (mode == MeasureSpec.AT_MOST){
+                result = Math.max(result, size);
+            }
+        }
+        return result;
     }
 
     /**
