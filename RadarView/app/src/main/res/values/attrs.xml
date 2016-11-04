@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="ThemeRadarViewStyle" format="reference"/>
+    <declare-styleable name="RadarViewStyle">
+        <attr name="edge_num" format="integer"/>
+        <attr name="radius" format="dimension"/>
+        <attr name="edge_dis" format="dimension"/>
+        <attr name="line_width" format="dimension"/>
+    </declare-styleable>
+</resources>
