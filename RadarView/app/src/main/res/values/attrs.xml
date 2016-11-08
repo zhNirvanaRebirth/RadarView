@@ -4,7 +4,8 @@
     <declare-styleable name="RadarViewStyle">
         <attr name="edge_num" format="integer"/>
         <attr name="radius" format="dimension"/>
-        <attr name="edge_dis" format="dimension"/>
         <attr name="line_width" format="dimension"/>
+        <attr name="line_color" format="color"/>
+        <attr name="layer_num" format="integer"/>
     </declare-styleable>
 </resources>
