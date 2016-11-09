@@ -9,6 +9,8 @@ import android.graphics.Path;
 import android.util.AttributeSet;
 import android.view.View;
 
+import java.util.List;
+
 /**
  * Created by zhwilson on 2016/10/31.
  * 自定义雷达控件
@@ -50,6 +52,8 @@ public class RadarView extends View {
     private float dis;
     //是否是奇数多边形
     private boolean isOdd;
+    //组成数据
+    private List<Data> datas;
 
     public RadarView(Context context) {
         this(context, null);
@@ -160,7 +164,7 @@ public class RadarView extends View {
             currentRadius += dis;
             path.close();
         }
-        for (int i = 0; i < edgeNum; i++){
+        for (int i = 0; i < edgeNum; i++) {
             float realRadius = dis * layerNum;
             float cos = (float) Math.cos(angle * i);
             float sin = (float) Math.sin(angle * i);
@@ -170,6 +174,32 @@ public class RadarView extends View {
             path.lineTo(positionX, positionY);
         }
         canvas.drawPath(path, paint);
+        if (datas != null && datas.size() > 0) {
+            Path dataPath = new Path();
+            Paint dataPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+            dataPaint.setColor(Color.RED);
+            dataPaint.setStrokeWidth(lineWidth);
+            dataPaint.setStyle(Paint.Style.STROKE);
+            int dataLength = datas.size() > edgeNum ? edgeNum : datas.size();
+            for (int i = 0; i < dataLength; i++) {
+                float realRadius = dis * layerNum;
+                float cos = (float) Math.cos(angle * i);
+                float sin = (float) Math.sin(angle * i);
+                float positionX = isOdd ? realRadius * sin : realRadius * cos;
+                float positionY = isOdd ? realRadius * cos : realRadius * sin;
+                if (i == 0)
+                    dataPath.moveTo(positionX * datas.get(i).getPercent(), positionY * datas.get(i).getPercent());
+                else
+                    dataPath.lineTo(positionX * datas.get(i).getPercent(), positionY * datas.get(i).getPercent());
+            }
+            dataPath.close();
+            canvas.drawPath(dataPath, dataPaint);
+        }
+    }
+
+    public void setDatas(List<Data> datas) {
+        this.datas = datas;
+        postInvalidate();
     }
 
     private float dp2px(float dp) {

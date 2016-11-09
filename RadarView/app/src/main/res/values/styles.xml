@@ -9,7 +9,7 @@
     </style>
 
     <style name="RadarViewNormal">
-        <item name="edge_num">6</item>
+        <item name="edge_num">10</item>
         <item name="radius">200dp</item>
         <item name="line_width">2px</item>
         <item name="line_color">@color/colorPrimary</item>
